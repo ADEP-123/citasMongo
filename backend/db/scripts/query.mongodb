@@ -1,0 +1,590 @@
+use("db_citas_mongo");
+const currentDate = new Date();
+
+// Coleccion de autoincrementables
+db.createCollection("counters");
+db.counters.insertMany([
+    { _id: "tipo_documentoId", sequence_value: 0 },
+    { _id: "generoId", sequence_value: 0 },
+    { _id: "acudienteId", sequence_value: 0 },
+    { _id: "especialidadId", sequence_value: 0 },
+    { _id: "consultorioId", sequence_value: 0 },
+    { _id: "estado_citaId", sequence_value: 0 },
+    { _id: "citaId", sequence_value: 0 }
+]);
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+
+//  Coleccion de tipo de documento
+db.createCollection("tipo_documento", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "tipdoc_nombre", "tipdoc_abreviatura"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id del tipo de documento"
+                },
+                tipdoc_nombre: {
+                    bsonType: "string",
+                    description: "nombre del tipo de documento"
+                },
+                tipdoc_abreviatura: {
+                    bsonType: "string",
+                    description: "abreviatura del tipo de documento"
+                }
+            }
+        }
+    }
+})
+db.tipo_documento.insertMany([
+    {
+        _id: Number(siguienteId("tipo_documento")),
+        tipdoc_nombre: "Cedula de ciudadania",
+        tipdoc_abreviatura: "Cc"
+    },
+    {
+        _id: Number(siguienteId("tipo_documento")),
+        tipdoc_nombre: "Pasaporte",
+        tipdoc_abreviatura: "Psp"
+    },
+    {
+        _id: Number(siguienteId("tipo_documento")),
+        tipdoc_nombre: "Tarjeta de identidad",
+        tipdoc_abreviatura: "Ti"
+    },
+    {
+        _id: Number(siguienteId("tipo_documento")),
+        tipdoc_nombre: "Cedula de extranjeria",
+        tipdoc_abreviatura: "Ce"
+    },
+    {
+        _id: Number(siguienteId("tipo_documento")),
+        tipdoc_nombre: "Registro civil",
+        tipdoc_abreviatura: "Rc"
+    }
+]);
+
+// Coleccion genero
+db.createCollection("genero", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "gen_nombre", "gen_abreviatura"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id del genero"
+                },
+                gen_nombre: {
+                    bsonType: "string",
+                    description: "titulo del genero"
+                },
+                gen_abreviatura: {
+                    bsonType: "string",
+                    description: "abreviatura del genero"
+                }
+            }
+        }
+    }
+})
+db.genero.insertMany([
+    {
+        _id: siguienteId("genero"),
+        gen_nombre: "Femenino",
+        gen_abreviatura: "Fem"
+    },
+    {
+        _id: siguienteId("genero"),
+        gen_nombre: "Masculino",
+        gen_abreviatura: "Masc"
+    },
+    {
+        _id: siguienteId("genero"),
+        gen_nombre: "No binario",
+        gen_abreviatura: "NB"
+    },
+    {
+        _id: siguienteId("genero"),
+        gen_nombre: "Prefiero no decirlo",
+        gen_abreviatura: "PNS"
+    }
+])
+
+// Coleccion acudiente
+db.createCollection("acudiente", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "acu_nombreCompleto"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id del acudiente"
+                },
+                acu_nombreCompleto: {
+                    bsonType: "string",
+                    description: "nombre completo de acudiente"
+                },
+                acu_telefono: {
+                    bsonType: ["string", "null"],
+                    description: "telefono del acudiente",
+                    pattern: "^[0-9]{10}$"
+                },
+                acu_direccion: {
+                    bsonType: ["string", "null"],
+                    description: "direccion del acudiente"
+                }
+            }
+        }
+    }
+})
+db.acudiente.insertMany([
+    {
+        _id: siguienteId("acudiente"),
+        acu_nombreCompleto: "Paco Alberto Jimenez Rojas",
+        acu_telefono: "3178569854",
+        acu_direccion: "Calle 51 # 66-03"
+    },
+    {
+        _id: siguienteId("acudiente"),
+        acu_nombreCompleto: "María López Pérez",
+        acu_telefono: "3107896541",
+        acu_direccion: "Av. Principal #123"
+    },
+    {
+        _id: siguienteId("acudiente"),
+        acu_nombreCompleto: "Juan Carlos González",
+        acu_telefono: "3004567890",
+        acu_direccion: "Carrera 25 #45-67"
+    }
+])
+
+// Coleccion especialidad
+db.createCollection("especialidad", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "esp_nombre"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id de la especialidad"
+                },
+                esp_nombre: {
+                    bsonType: "string",
+                    description: "titulo de la especialidad"
+                }
+            }
+        }
+    }
+});
+db.especialidad.insertMany([
+    {
+        _id: siguienteId("especialidad"),
+        esp_nombre: "Urologo"
+    },
+    {
+        _id: siguienteId("especialidad"),
+        esp_nombre: "Cardiologo"
+    },
+    {
+        _id: siguienteId("especialidad"),
+        esp_nombre: "Pediatra"
+    },
+    {
+        _id: siguienteId("especialidad"),
+        esp_nombre: "Dermatologo"
+    }
+])
+
+// cleccion consultorio
+db.createCollection("consultorio", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "cons_nombre"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id del consultorio"
+                },
+                cons_nombre: {
+                    bsonType: "string",
+                    description: "titulo del consultorio"
+                }
+            }
+        }
+    }
+});
+db.consultorio.insertMany([
+    {
+        _id: siguienteId("consultorio"),
+        cons_nombre: "El Prado"
+    },
+    {
+        _id: siguienteId("consultorio"),
+        cons_nombre: "Salud Total"
+    },
+    {
+        _id: siguienteId("consultorio"),
+        cons_nombre: "Clinica San Juan"
+    },
+    {
+        _id: siguienteId("consultorio"),
+        cons_nombre: "Centro Médico ABC"
+    }
+])
+
+// Coleccion Estado Cita
+db.createCollection("estado_cita", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "estcita_nombre"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id del estado de la cita"
+                },
+                estcita_nombre: {
+                    bsonType: "string",
+                    description: "titulo estado de la cita"
+                }
+            }
+        }
+    }
+});
+db.estado_cita.insertMany([
+    {
+        _id: siguienteId("estado_cita"),
+        estcita_nombre: "ACTIVA"
+    },
+    {
+        _id: siguienteId("estado_cita"),
+        estcita_nombre: "SUPENDIDA"
+    },
+    {
+        _id: siguienteId("estado_cita"),
+        estcita_nombre: "CANCELADA"
+    },
+    {
+        _id: siguienteId("estado_cita"),
+        estcita_nombre: "PERDIDA"
+    }
+])
+
+// Coleccion Medico
+db.createCollection("medico", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "med_nombreCompleto", "med_consultorio", "med_especialidad"],
+            properties: {
+                _id: {
+                    bsonType: "string",
+                    pattern: "^[0-9]{10}$",
+                    description: "documento del medico"
+                },
+                med_nombreCompleto: {
+                    bsonType: "string",
+                    description: "Nombre completo del medico"
+                },
+                med_consultorio: {
+                    bsonType: "int",
+                    description: "id del consultorio del medico"
+                },
+                med_especialidad: {
+                    bsonType: "int",
+                    description: "id de la especialidad del medico"
+                }
+            }
+        }
+    }
+});
+db.medico.insertMany([
+    {
+        _id: "1098817567",
+        med_nombreCompleto: "Andres David Elizalde Peralta",
+        med_consultorio: 1,
+        med_especialidad: 1
+    },
+    {
+        _id: "2098817568",
+        med_nombreCompleto: "Maria Garcia Perez",
+        med_consultorio: 2,
+        med_especialidad: 2
+    },
+    {
+        _id: "3098817569",
+        med_nombreCompleto: "Juan Lopez Rodriguez",
+        med_consultorio: 3,
+        med_especialidad: 3
+    },
+    {
+        _id: "4098817570",
+        med_nombreCompleto: "Luisa Martinez Sanchez",
+        med_consultorio: 4,
+        med_especialidad: 4
+    }
+]);
+
+// Coleccion Usuario
+db.createCollection("usuario", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "usu_nombre", "usu_segdo_nombre", "usu_primer_apellido_usuar", "usu_segdo_apellido_usuar", "usu_telefono", "usu_direccion", "usu_tipodoc", "usu_genero", "usu_fechNac"],
+            properties: {
+                _id: {
+                    bsonType: "string",
+                    pattern: "^[0-9]{10}$",
+                    description: "documento del usuario"
+                },
+                usu_nombre: {
+                    bsonType: "string",
+                    description: "Primer nombre del usuario"
+                },
+                usu_segdo_nombre: {
+                    bsonType: "string",
+                    description: "segundo nombre del usuario"
+                },
+                usu_primer_apellido_usuar: {
+                    bsonType: "string",
+                    description: "primer apellido del usuario"
+                },
+                usu_segdo_apellido_usuar: {
+                    bsonType: "string",
+                    description: "segundo apellido del usuario"
+                },
+                usu_telefono: {
+                    bsonType: ["string", "null"],
+                    pattern: "^[0-9]{10}$",
+                    description: "telefono del usuario"
+                },
+                usu_direccion: {
+                    bsonType: "string",
+                    description: "direccion del usuario"
+                },
+                usu_e_mail: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                    description: "email del usuario"
+                },
+                usu_tipodoc: {
+                    bsonType: "int",
+                    description: "id del tipo de documento"
+                },
+                usu_genero: {
+                    bsonType: "int",
+                    description: "id del genero"
+                },
+                usu_fechNac: {
+                    bsonType: "date",
+                    description: "fecha de nacimiento del usuario"
+                },
+                usu_acudiente: {
+                    bsonType: ["int", "null"],
+                    description: "id del acudiente"
+                }
+            }
+        }
+    }
+});
+db.usuario.insertMany([
+    {
+        _id: "1098817567",
+        usu_nombre: "Daniela",
+        usu_segdo_nombre: "",
+        usu_primer_apellido_usuar: "Zapata",
+        usu_segdo_apellido_usuar: "Mora",
+        usu_telefono: "3158696969",
+        usu_direccion: "Parque de los gatos",
+        usu_e_mail: "daniLaMasViral@gmail.com",
+        usu_tipodoc: 1,
+        usu_genero: 1,
+        usu_fechNac: new Date("1998-08-21"),
+        usu_acudiente: null
+    },
+    {
+        _id: "2087654321",
+        usu_nombre: "Juan",
+        usu_segdo_nombre: "Pablo",
+        usu_primer_apellido_usuar: "Gonzalez",
+        usu_segdo_apellido_usuar: "Lopez",
+        usu_telefono: "3009876543",
+        usu_direccion: "Calle 123 #45-67",
+        usu_e_mail: "juanito123@gmail.com",
+        usu_tipodoc: 2,
+        usu_genero: 2,
+        usu_fechNac: new Date("2008-05-10"),
+        usu_acudiente: 2
+    },
+    {
+        _id: "3076543210",
+        usu_nombre: "Maria",
+        usu_segdo_nombre: "Fernanda",
+        usu_primer_apellido_usuar: "Martinez",
+        usu_segdo_apellido_usuar: "Perez",
+        usu_telefono: "3107896541",
+        usu_direccion: "Av. Principal #567",
+        usu_e_mail: "mariafp@gmail.com",
+        usu_tipodoc: 3,
+        usu_genero: 3,
+        usu_fechNac: new Date("2000-12-15"),
+        usu_acudiente: null
+    },
+    {
+        _id: "4087654321",
+        usu_nombre: "Luis",
+        usu_segdo_nombre: "Felipe",
+        usu_primer_apellido_usuar: "Garcia",
+        usu_segdo_apellido_usuar: "Rojas",
+        usu_telefono: "3012345678",
+        usu_direccion: "Avenida 456 #78-90",
+        usu_e_mail: "luisfgr@gmail.com",
+        usu_tipodoc: 4,
+        usu_genero: 2,
+        usu_fechNac: new Date("1995-03-08"),
+        usu_acudiente: null
+    },
+    {
+        _id: "5076543298",
+        usu_nombre: "Laura",
+        usu_segdo_nombre: "Isabel",
+        usu_primer_apellido_usuar: "Ramirez",
+        usu_segdo_apellido_usuar: "Vargas",
+        usu_telefono: "3109876542",
+        usu_direccion: "Carrera 789 #12-34",
+        usu_e_mail: "laurarv@gmail.com",
+        usu_tipodoc: 1,
+        usu_genero: 3,
+        usu_fechNac: new Date("2013-11-25"),
+        usu_acudiente: 3
+    },
+    {
+        _id: "6098765432",
+        usu_nombre: "Carlos",
+        usu_segdo_nombre: "Andres",
+        usu_primer_apellido_usuar: "Lopez",
+        usu_segdo_apellido_usuar: "Hernandez",
+        usu_telefono: "3207654321",
+        usu_direccion: "Calle 567 #89-12",
+        usu_e_mail: "carloshl@gmail.com",
+        usu_tipodoc: 5,
+        usu_genero: 4,
+        usu_fechNac: new Date("2010-06-17"),
+        usu_acudiente: 1
+    }
+]);
+
+// Coleccion Cita
+db.createCollection("cita", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "cit_fecha", "cit_estadoCita", "cit_medico", "cit_datosUsuario"],
+            properties: {
+                _id: {
+                    bsonType: "int",
+                    description: "id de la cita"
+                },
+                cit_fecha: {
+                    bsonType: "date",
+                    description: "fecha y hora de la cita"
+                },
+                cit_estadoCita: {
+                    bsonType: "int",
+                    description: "id del estado de la cita"
+                },
+                cit_medico: {
+                    bsonType: "string",
+                    description: "documento del medico"
+                },
+                cit_datosUsuario: {
+                    bsonType: "string",
+                    description: "dcoumento del paciente"
+                }
+            }
+        }
+    }
+});
+db.cita.insertMany([
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-21T10:00:00Z"),
+        cit_estadoCita: 2,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "2087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-22T14:30:00Z"),
+        cit_estadoCita: 3,
+        cit_medico: "3098817569",
+        cit_datosUsuario: "3076543210"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-23T16:45:00Z"),
+        cit_estadoCita: 4,
+        cit_medico: "4098817570",
+        cit_datosUsuario: "4087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-24T09:15:00Z"),
+        cit_estadoCita: 1,
+        cit_medico: "1098817776",
+        cit_datosUsuario: "5076543298"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-25T11:30:00Z"),
+        cit_estadoCita: 2,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "6098765432"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-26T13:00:00Z"),
+        cit_estadoCita: 3,
+        cit_medico: "3098817569",
+        cit_datosUsuario: "1098817567"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-27T15:30:00Z"),
+        cit_estadoCita: 4,
+        cit_medico: "4098817570",
+        cit_datosUsuario: "2087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-28T10:45:00Z"),
+        cit_estadoCita: 2,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "3076543210"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-29T16:15:00Z"),
+        cit_estadoCita: 1,
+        cit_medico: "1098817776",
+        cit_datosUsuario: "4087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-30T11:45:00Z"),
+        cit_estadoCita: 3,
+        cit_medico: "3098817569",
+        cit_datosUsuario: "5076543298"
+    }
+]);
