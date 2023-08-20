@@ -5,6 +5,7 @@ import { Router } from 'express';
 import { SignJWT } from 'jose';
 import { Usuarios } from '../routes/dto/js/usuarios.js';
 import { Cita } from '../routes/dto/js/citas.js';
+import { Medicos } from '../routes/dto/js/medicos.js';
 
 
 dotenv.config();
