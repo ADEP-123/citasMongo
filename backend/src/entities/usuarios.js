@@ -1,4 +1,4 @@
-import { collectionGen } from "../utils/db.js";
+import { collectionGen, startTransaction } from "../utils/db.js";
 import Counters from "./counters.js";
 const counter = new Counters()
 
@@ -8,8 +8,8 @@ class Usuarios {
     async getAllUsers() {
         let session;
         try {
+            session = await startTransaction();
             const productosCollection = await collectionGen("usuario");
-            session = productosCollection;
             const result = productosCollection.aggregate([
                 {
                     $project: {
@@ -36,10 +36,18 @@ class Usuarios {
                     }
                 }
             ]).toArray();
+            await session.commitTransaction();
             return result;
         } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
             throw error;
-        } 
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
     }
 
 }
