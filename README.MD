@@ -64,7 +64,7 @@ Ejercicio practico para aprendizaje de mongo, se creo una base de datos simuland
   - Usuarios
   - Cita
   - Medicos
-- Ej: http://127.10.10.10:5010/campus/login/bodegasDTO
+- Ej: http://127.10.10.10:5010/campus/login/Usuarios
 
 2. Copie el token que sera devuelto como mensaje y envielo dentro del header Authorization
 
@@ -101,8 +101,17 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 - Metodo: get
 - Tipo token esperado: Cita
 - Data: query
-- Descripcion: Endpoint que permite Encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
+- Descripcion: Endpoint que permite encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
 - Ejemplo: http://127.10.10.10:5010/campus/get/citaSiguente?idUsuario=2087654321
+
+5.  Encontrar todos los pacientes que tienen citas con un médico específico (por ejemplo, el médico con **_id 1098817776**)
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/getPatients
+- Metodo: get
+- Tipo token esperado: Cita
+- Data: query
+- Descripcion: Endpoint que permite encontrar todos los pacientes que tienen citas con un médico específico.
+- Ejemplo: http://127.10.10.10:5010/campus/get/getPatients?idMedico=1098817776
 # Creador:
 
 ## Andrès David ELizalde Peralta
