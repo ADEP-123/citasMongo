@@ -70,6 +70,14 @@ Ejercicio practico para aprendizaje de mongo, se creo una base de datos simuland
 
 Ahora si podra interactuar con las consultas de la siguiente manera: 
 
+
+1. Obtener todos los pacientes alfabéticamente
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/usuarios
+- Metodo: get
+- Data: NN
+- Descripcion: Endpoint que permite Obtener todos los pacientes alfabéticamente
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
