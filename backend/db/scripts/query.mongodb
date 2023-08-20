@@ -341,7 +341,7 @@ db.createCollection("usuario", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "usu_nombre", "usu_segdo_nombre", "usu_primer_apellido_usuar", "usu_segdo_apellido_usuar", "usu_telefono", "usu_direccion", "usu_tipodoc", "usu_genero", "usu_fechNac"],
+            required: ["_id", "usu_nombre", "usu_primer_apellido_usuar", "usu_segdo_apellido_usuar", "usu_telefono", "usu_direccion", "usu_tipodoc", "usu_genero", "usu_fechNac"],
             properties: {
                 _id: {
                     bsonType: "string",
