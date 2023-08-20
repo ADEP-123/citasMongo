@@ -1,4 +1,5 @@
 import Citas from "../entities/citas.js";
+import Medicos from "../entities/medicos.js";
 import Usuarios from "../entities/usuarios.js";
 
 const getAllUsersService = async () => {
@@ -13,7 +14,14 @@ const getAllDatesService = async () => {
     return result;
 };
 
+const getAllSpecialistService = async (especialidad) => {
+    const medico = new Medicos()
+    const result = await medico.getAllSpecialist(especialidad);
+    return result;
+};
+
 export {
     getAllUsersService,
-    getAllDatesService
+    getAllDatesService,
+    getAllSpecialistService
 }
