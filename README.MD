@@ -68,16 +68,23 @@ Ejercicio practico para aprendizaje de mongo, se creo una base de datos simuland
 
 2. Copie el token que sera devuelto como mensaje y envielo dentro del header Authorization
 
-Ahora si podra interactuar con las consultas de la siguiente manera: 
-
+Ahora si podra interactuar con las consultas de la siguiente manera:
 
 1. Obtener todos los pacientes alfabéticamente
 
 - UrlDefault: http://127.10.10.10:5010/campus/get/usuarios
 - Metodo: get
+- Tipo token esperado: Usuarios
 - Data: NN
-- Descripcion: Endpoint que permite Obtener todos los pacientes alfabéticamente
+- Descripcion: Endpoint que permite obtener todos los pacientes alfabéticamente
 
+2. Obtener todas las citas alfabéticamente
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/citas
+- Metodo: get
+- Tipo token esperado: Cita
+- Data: NN
+- Descripcion: Endpoint que permite obtener todas las citas alfabéticamente
 # Creador:
 
 ## Andrès David ELizalde Peralta
