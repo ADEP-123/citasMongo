@@ -4,12 +4,13 @@ import getInitRoute from "./getData.js";
 // import putInitRoute from "./putData.js";
 // import { middlewareRateLimit } from "../middleware/limit.js";
 import { appToken } from "../services/tokenGenerator.js";
-// import { authorizationMiddleware } from "../middleware/autohorizationMiddleware.js";
+import { authorizationMiddleware } from "../middleware/authorizationMiddleware.js";
+
 
 const initApiRoutes = () => {
     const router = Router();
     router.use("/login", appToken)
-    router.use("/get", getInitRoute())
+    router.use("/get", authorizationMiddleware, getInitRoute())
     // router.use("/post", postInitRoute())
     // router.use("/put", putInitRoute())
     return router
