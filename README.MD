@@ -85,6 +85,16 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 - Tipo token esperado: Cita
 - Data: NN
 - Descripcion: Endpoint que permite obtener todas las citas alfabéticamente
+
+3. Obtener todos los médicos de una especialidad específica (por ejemplo, **'Cardiología'**):
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/medicos
+- Metodo: get
+- Tipo token esperado: Medicos
+- Data: query
+- Descripcion: Endpoint que permite obtener todos los médicos de una especialidad específica.
+- Ejemplo: http://127.10.10.10:5010/campus/get/medicos?especialidad=Urologo
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
