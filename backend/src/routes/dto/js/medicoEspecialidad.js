@@ -15,9 +15,9 @@ export class medicoEspecialidadDTO {
 }
 __decorate([
     Expose({ name: "especialidad" }),
-    Transform(({ value, key }) => { if (Math.floor(value))
-        return Math.floor(value);
+    Transform(({ value, key }) => { if (value)
+        return value;
     else
-        throw { status: 400, message: `Error en el id de la especialidad del medico, tipo de dato esperado entero` }; }, { toClassOnly: true }),
-    __metadata("design:type", Number)
-], medicoEspecialidadDTO.prototype, "med_especialidad", void 0);
+        throw { status: 400, message: `La especialidad es requerda` }; }, { toClassOnly: true }),
+    __metadata("design:type", String)
+], medicoEspecialidadDTO.prototype, "esp_nombre", void 0);
