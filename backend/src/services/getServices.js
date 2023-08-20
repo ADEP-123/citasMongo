@@ -20,8 +20,15 @@ const getAllSpecialistService = async (especialidad) => {
     return result;
 };
 
+const getNextDateService = async (idUsuario) => {
+    const cita = new Citas()
+    const result = await cita.getNextDate(idUsuario);
+    return result;
+};
+
 export {
     getAllUsersService,
     getAllDatesService,
-    getAllSpecialistService
+    getAllSpecialistService,
+    getNextDateService
 }
