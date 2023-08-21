@@ -209,5 +209,46 @@ class Citas {
         }
     };
 
+    async getAmountDatesbyDateAndMedic(fecha, idMedico) {
+        let session;
+        const fechaFormateada = new Date(fecha)
+        const diaSiguiente = new Date(fechaFormateada)
+        diaSiguiente.setDate(diaSiguiente.getDate() + 1)
+        try {
+            session = await startTransaction();
+            const productosCollection = await collectionGen("cita");
+            const result = productosCollection.aggregate([
+                {
+                    $match: {
+                        cit_fecha: {
+                            $gte: fechaFormateada,
+                            $lte: diaSiguiente
+                        },
+                        cit_medico: { $eq: idMedico }
+                    }
+                },
+                {
+                    $project: {
+                        id: "$_id",
+                        idEstadoCita: "$cit_estadoCita",
+                        idUsuario: "$cit_datosUsuario",
+                        _id: 0
+                    }
+                }
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    };
+
 }
 export default Citas;
