@@ -22,7 +22,7 @@ export class Usuarios {
         this.usu_tipodoc = 1;
         this.usu_genero = 1;
         this.usu_fechNac = "1111-11-11";
-        this.usu_acudiente = "111111111";
+        this.usu_acudiente = 1;
     }
 }
 __decorate([
@@ -37,7 +37,7 @@ __decorate([
             }
         }
         else {
-            throw { status: 400, message: `El id del responsable es requerido` };
+            throw { status: 400, message: `El id del usuario es requerido` };
         }
     }, { toClassOnly: true }),
     __metadata("design:type", String)
@@ -52,7 +52,7 @@ __decorate([
 ], Usuarios.prototype, "usu_nombre", void 0);
 __decorate([
     Expose({ name: "segundoNombre" }),
-    Transform(({ value, key }) => { }, { toClassOnly: true }),
+    Transform(({ value, key }) => { return value; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], Usuarios.prototype, "usu_segdo_nombre", void 0);
 __decorate([
@@ -100,7 +100,7 @@ __decorate([
     Expose({ name: "email" }),
     Transform(({ value, key }) => {
         if (value) {
-            if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.test(value)) {
+            if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
                 return value;
             }
             else {
@@ -150,7 +150,7 @@ __decorate([
     Expose({ name: "acudienteId" }),
     Transform(({ value, key }) => {
         if (value) {
-            if (/^[0-9]{10}$/.test(value)) {
+            if (Math.floor(value)) {
                 return value;
             }
             else {
@@ -161,5 +161,5 @@ __decorate([
             return value;
         }
     }, { toClassOnly: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], Usuarios.prototype, "usu_acudiente", void 0);
