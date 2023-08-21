@@ -317,6 +317,63 @@ class Citas {
         }
     };
 
+    async getDatesByGander(genero) {
+        let session;
+        try {
+            session = await startTransaction();
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
+                {
+                    $lookup: {
+                        from: "usuario",
+                        localField: "cit_datosUsuario",
+                        foreignField: "_id",
+                        as: "usuarioInfo"
+                    }
+                },
+                {
+                    $unwind: "$usuarioInfo"
+                },
+                {
+                    $project: {
+                        id: "$_id",
+                        fecha: "$cit_fecha",
+                        idMedico: "$cit_medico",
+                        idUsuario: "$cit_datosUsuario",
+                        generoid: "$usuarioInfo.usu_genero",
+                        estado: "$cit_estadoCita"
+                    }
+                },
+                {
+                    $match: {
+                        generoid: { $eq: genero },
+                        estado: { $eq: 5 }
+                    }
+                },
+                {
+                    $project: {
+                        id: 1,
+                        fecha: 1,
+                        idMedico: 1,
+                        idUsuario: 1,
+                        _id: 0
+                    }
+                },
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    };
+
 
 }
 export default Citas;

@@ -62,6 +62,12 @@ const getDateConsultoryService = async (idUsuario) => {
     return result
 };
 
+const getDatesByGenderService = async (genero) => {
+    const cita = new Citas();
+    const result = await cita.getDatesByGander(genero);
+    return result
+};
+
 export {
     getAllUsersService,
     getAllDatesService,
@@ -72,5 +78,6 @@ export {
     getDatesByDateService,
     getAllMedicsAndConsultoriesService,
     getAmountDatesbyDateAndMedicService,
-    getDateConsultoryService
+    getDateConsultoryService,
+    getDatesByGenderService
 }
