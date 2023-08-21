@@ -101,7 +101,6 @@ const getDateConsultoryController = async (req, res, next) => {
 const getDatesByGenderController = async (req, res, next) => {
     try {
         const { usu_genero } = req.query;
-        console.log(usu_genero);
         const result = await getDatesByGenderService(usu_genero);
         res.status(200).json({ message: `se han encontrado ${result.length} resultados`, result })
     } catch (error) {

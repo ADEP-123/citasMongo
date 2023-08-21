@@ -50,5 +50,42 @@ class Usuarios {
         }
     }
 
+    async postNewPatient(id, primerNombre, segundoNombre, primerApellido, segundoApellido, telefono, direccion, email, tipoDocumento, genero, fechaNacimiento, acudienteId) {
+        let session;
+        try {
+            session = await startTransaction();
+            const productosCollection = await collectionGen("usuario");
+            const result = productosCollection.insertOne(
+                {
+
+                    _id: id,
+                    usu_nombre: primerNombre,
+                    usu_segdo_nombre: segundoNombre,
+                    usu_primer_apellido_usuar: primerApellido,
+                    usu_segdo_apellido_usuar: segundoApellido,
+                    usu_telefono: telefono,
+                    usu_direccion: direccion,
+                    usu_e_mail: email,
+                    usu_tipodoc: tipoDocumento,
+                    usu_genero: genero,
+                    usu_fechNac: new Date(fechaNacimiento),
+                    usu_acudiente: acudienteId
+
+                }
+            );
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    }
+
 }
 export default Usuarios;

@@ -1,3 +1,4 @@
+import Acudientes from "../entities/acudiente.js";
 import Citas from "../entities/citas.js";
 import Medicos from "../entities/medicos.js";
 import Usuarios from "../entities/usuarios.js";
@@ -68,6 +69,12 @@ const getDatesByGenderService = async (genero) => {
     return result
 };
 
+const getAcudienteByIdService = async (id) => {
+    const acudiente = new Acudientes()
+    const result = await acudiente.getAcudienteById(id);
+    return result;
+};
+
 export {
     getAllUsersService,
     getAllDatesService,
@@ -79,5 +86,6 @@ export {
     getAllMedicsAndConsultoriesService,
     getAmountDatesbyDateAndMedicService,
     getDateConsultoryService,
-    getDatesByGenderService
+    getDatesByGenderService,
+    getAcudienteByIdService
 }
