@@ -122,6 +122,15 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 - Descripcion: Endpoint que permite obtener las consultorías para un paciente específico.
 - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorPaciente?idUsuario=2087654321
 
+7. Encontrar todas las citas para un día específico (por ejemplo, **'2023-07-12'**)
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/citasPorFecha
+- Metodo: get
+- Tipo token esperado: Cita
+- Data: query
+- Descripcion: Endpoint que permite encontrar todas las citas para un día específico.
+- Ejemplo: http://127.10.10.10:5010/campus/get/citasPorFecha?fecha=2023-08-27
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
