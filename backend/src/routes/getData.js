@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getDatesByDateController, getDatesController, getMedicsController, getNextDateController, getPatientsdateByMedicController, getPatientsdateByPatientController, getUsersController } from '../controllers/getDataControllers.js';
+import { getAllMedicsAndConsultoriesController, getDatesByDateController, getDatesController, getMedicsController, getNextDateController, getPatientsdateByMedicController, getPatientsdateByPatientController, getUsersController } from '../controllers/getDataControllers.js';
 import { contentMiddlewareCitas, contentMiddlewareMedicos, contentMiddlewareUsuarios } from '../middleware/contentVerifyMiddleware.js';
 import { middlewareCitaPacienteDTO, middlewareCitasFechaDTO, middlewareMedicoSepecialidadDTO, middlewarePacientesMedicoDTO, middlewareProximaCitaDTO } from '../middleware/middlewaresDTO.js';
 
@@ -13,6 +13,7 @@ const getInitRoute = () => {
     router.get("/medicos", contentMiddlewareMedicos, middlewareMedicoSepecialidadDTO, getMedicsController);
     router.get("/citasPorPaciente", contentMiddlewareCitas, middlewareCitaPacienteDTO, getPatientsdateByPatientController);
     router.get("/citasPorFecha", contentMiddlewareCitas, middlewareCitasFechaDTO, getDatesByDateController);
+    router.get("/medicosConsultorios", contentMiddlewareMedicos, getAllMedicsAndConsultoriesController);
 
     return router;
 }

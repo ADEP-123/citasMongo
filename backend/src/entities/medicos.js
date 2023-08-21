@@ -49,5 +49,46 @@ class Medicos {
         }
     }
 
+    async getAllMedicsAndConsultories() {
+        let session;
+        try {
+            session = await startTransaction();
+            const productosCollection = await collectionGen("medico");
+            const result = productosCollection.aggregate([
+                {
+                    $lookup: {
+                        from: "consultorio",
+                        localField: "med_consultorio",
+                        foreignField: "_id",
+                        as: "consultorio"
+                    }
+                },
+                {
+                    $unwind: "$consultorio"
+                },
+                {
+                    $project: {
+                        id: "$_id",
+                        nombre: "$med_nombreCompleto",
+                        especialidad: "$med_especialidad",
+                        consultorio: "$consultorio.cons_nombre",
+                        _id: 0
+                    }
+                }
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    }
+
 }
 export default Medicos;

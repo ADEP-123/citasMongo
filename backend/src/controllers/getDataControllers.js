@@ -1,4 +1,4 @@
-import { getAllDatesService, getAllSpecialistService, getAllUsersService, getDatesByDateService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService } from "../services/getServices.js";
+import { getAllDatesService, getAllMedicsAndConsultoriesService, getAllSpecialistService, getAllUsersService, getDatesByDateService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService } from "../services/getServices.js";
 
 
 const getUsersController = async (req, res, next) => {
@@ -57,7 +57,7 @@ const getPatientsdateByPatientController = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
 const getDatesByDateController = async (req, res, next) => {
     try {
@@ -67,7 +67,16 @@ const getDatesByDateController = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
+
+const getAllMedicsAndConsultoriesController = async (req, res, next) => {
+    try {
+        const result = await getAllMedicsAndConsultoriesService();
+        res.status(200).json({ message: `se han encontrado ${result.length} resultados`, result })
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 
 
@@ -79,5 +88,6 @@ export {
     getPatientsdateByMedicController,
     getNextDateController,
     getPatientsdateByPatientController,
-    getDatesByDateController
+    getDatesByDateController,
+    getAllMedicsAndConsultoriesController
 }

@@ -44,6 +44,12 @@ const getDatesByDateService = async (fecha) => {
     return result
 };
 
+const getAllMedicsAndConsultoriesService = async () => {
+    const medico = new Medicos();
+    const result = await medico.getAllMedicsAndConsultories();
+    return result
+};
+
 export {
     getAllUsersService,
     getAllDatesService,
@@ -51,5 +57,6 @@ export {
     getNextDateService,
     getPatientsdateByMedicService,
     getPatientsdateByPatientService,
-    getDatesByDateService
+    getDatesByDateService,
+    getAllMedicsAndConsultoriesService
 }
