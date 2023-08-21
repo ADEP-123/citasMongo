@@ -7,8 +7,8 @@ class Citas {
         let session;
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $project: {
                         id: "$_id",
@@ -43,8 +43,8 @@ class Citas {
         let session;
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $project: {
                         id: "$_id",
@@ -80,8 +80,8 @@ class Citas {
         let session;
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $lookup: {
                         from: "usuario",
@@ -135,8 +135,8 @@ class Citas {
         let session;
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $project: {
                         id: "$_id",
@@ -174,8 +174,8 @@ class Citas {
         diaSiguiente.setDate(diaSiguiente.getDate() + 1)
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $project: {
                         id: "$_id",
@@ -216,8 +216,8 @@ class Citas {
         diaSiguiente.setDate(diaSiguiente.getDate() + 1)
         try {
             session = await startTransaction();
-            const productosCollection = await collectionGen("cita");
-            const result = productosCollection.aggregate([
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
                 {
                     $match: {
                         cit_fecha: {
@@ -249,6 +249,74 @@ class Citas {
             }
         }
     };
+
+    async getDateConsultory(idUsuario) {
+        let session;
+        try {
+            session = await startTransaction();
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
+                {
+                    $lookup: {
+                        from: "medico",
+                        localField: "cit_medico",
+                        foreignField: "_id",
+                        as: "medicoInfo"
+
+                    }
+                },
+                {
+                    $unwind: "$medicoInfo"
+                },
+                {
+                    $project: {
+                        idCita: "$_id",
+                        fecha: "$cit_fecha",
+                        estado: "$cit_estadoCita",
+                        consultorioID: "$medicoInfo.med_consultorio",
+                        idUsuario: "$cit_datosUsuario"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "consultorio",
+                        localField: "consultorioID",
+                        foreignField: "_id",
+                        as: "consultorioInfo"
+                    }
+                },
+                {
+                    $unwind: "$consultorioInfo"
+                },
+                {
+                    $match: {
+                        idUsuario: { $eq: idUsuario },
+                        estado: { $eq: 5 }
+                    }
+                },
+                {
+                    $project: {
+                        idCita: 1,
+                        fecha: 1,
+                        consultorio: "$consultorioInfo.cons_nombre",
+                        _id: 0
+                    }
+                }
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    };
+
 
 }
 export default Citas;
