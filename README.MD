@@ -131,6 +131,15 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 - Descripcion: Endpoint que permite encontrar todas las citas para un día específico.
 - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorFecha?fecha=2023-08-27
 
+8. Obtener los médicos y sus consultorios
+
+- UrlDefault: http://127.10.10.10:5010/campus/get/medicosConsultorios
+- Metodo: get
+- Tipo token esperado: Medicos
+- Data: query
+- Descripcion: Endpoint que permite obtener los médicos y sus consultorios.
+- Ejemplo: http://127.10.10.10:5010/campus/get/medicosConsultorios
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
