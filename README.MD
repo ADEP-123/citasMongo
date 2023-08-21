@@ -72,73 +72,82 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 
 1. Obtener todos los pacientes alfabéticamente
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/usuarios
-- Metodo: get
-- Tipo token esperado: Usuarios
-- Data: NN
-- Descripcion: Endpoint que permite obtener todos los pacientes alfabéticamente
+   - UrlDefault: http://127.10.10.10:5010/campus/get/usuarios
+   - Metodo: get
+   - Tipo token esperado: Usuarios
+   - Data: NN
+   - Descripcion: Endpoint que permite obtener todos los pacientes alfabéticamente
 
 2. Obtener todas las citas alfabéticamente
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/citas
-- Metodo: get
-- Tipo token esperado: Cita
-- Data: NN
-- Descripcion: Endpoint que permite obtener todas las citas alfabéticamente
+   - UrlDefault: http://127.10.10.10:5010/campus/get/citas
+   - Metodo: get
+   - Tipo token esperado: Cita
+   - Data: NN
+   - Descripcion: Endpoint que permite obtener todas las citas alfabéticamente
 
 3. Obtener todos los médicos de una especialidad específica (por ejemplo, **'Cardiología'**):
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/medicos
-- Metodo: get
-- Tipo token esperado: Medicos
-- Data: query
-- Descripcion: Endpoint que permite obtener todos los médicos de una especialidad específica.
-- Ejemplo: http://127.10.10.10:5010/campus/get/medicos?especialidad=Urologo
+   - UrlDefault: http://127.10.10.10:5010/campus/get/medicos
+   - Metodo: get
+   - Tipo token esperado: Medicos
+   - Data: query
+   - Descripcion: Endpoint que permite obtener todos los médicos de una especialidad específica.
+   - Ejemplo: http://127.10.10.10:5010/campus/get/medicos?especialidad=Urologo
 
 4. Encontrar la próxima cita para un paciente específico (por ejemplo, el paciente con **usu_id 1**):
 
 - UrlDefault: http://127.10.10.10:5010/campus/get/citaSiguente
-- Metodo: get
-- Tipo token esperado: Cita
-- Data: query
-- Descripcion: Endpoint que permite encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
-- Ejemplo: http://127.10.10.10:5010/campus/get/citaSiguente?idUsuario=2087654321
+  - Metodo: get
+  - Tipo token esperado: Cita
+  - Data: query
+  - Descripcion: Endpoint que permite encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
+  - Ejemplo: http://127.10.10.10:5010/campus/get/citaSiguente?idUsuario=2087654321
 
 5.  Encontrar todos los pacientes que tienen citas con un médico específico (por ejemplo, el médico con **\_id 1098817776**)
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/getPatients
-- Metodo: get
-- Tipo token esperado: Cita
-- Data: query
-- Descripcion: Endpoint que permite encontrar todos los pacientes que tienen citas con un médico específico.
-- Ejemplo: http://127.10.10.10:5010/campus/get/getPatients?idMedico=1098817776
+    - UrlDefault: http://127.10.10.10:5010/campus/get/getPatients
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite encontrar todos los pacientes que tienen citas con un médico específico.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/getPatients?idMedico=1098817776
 
 6.  Obtener las consultorías para un paciente específico (por ejemplo, paciente **con usu_id 1**)
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/citasPorPaciente
-- Metodo: get
-- Tipo token esperado: Cita
-- Data: query
-- Descripcion: Endpoint que permite obtener las consultorías para un paciente específico.
-- Ejemplo: http://127.10.10.10:5010/campus/get/citasPorPaciente?idUsuario=2087654321
+    - UrlDefault: http://127.10.10.10:5010/campus/get/citasPorPaciente
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite obtener las consultorías para un paciente específico.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorPaciente?idUsuario=2087654321
 
-7. Encontrar todas las citas para un día específico (por ejemplo, **'2023-07-12'**)
+7.  Encontrar todas las citas para un día específico (por ejemplo, **'2023-07-12'**)
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/citasPorFecha
-- Metodo: get
-- Tipo token esperado: Cita
-- Data: query
-- Descripcion: Endpoint que permite encontrar todas las citas para un día específico.
-- Ejemplo: http://127.10.10.10:5010/campus/get/citasPorFecha?fecha=2023-08-27
+    - UrlDefault: http://127.10.10.10:5010/campus/get/citasPorFecha
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite encontrar todas las citas para un día específico.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorFecha?fecha=2023-08-27
 
-8. Obtener los médicos y sus consultorios
+8.  Obtener los médicos y sus consultorios
 
-- UrlDefault: http://127.10.10.10:5010/campus/get/medicosConsultorios
-- Metodo: get
-- Tipo token esperado: Medicos
-- Data: query
-- Descripcion: Endpoint que permite obtener los médicos y sus consultorios.
-- Ejemplo: http://127.10.10.10:5010/campus/get/medicosConsultorios
+    - UrlDefault: http://127.10.10.10:5010/campus/get/medicosConsultorios
+    - Metodo: get
+    - Tipo token esperado: Medicos
+    - Data: query
+    - Descripcion: Endpoint que permite obtener los médicos y sus consultorios.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/medicosConsultorios
+
+9.  Contar el número de citas que un médico tiene en un día específico (por ejemplo, el médico con **med_nroMatriculaProsional 1 en '2023-07-12'**)
+
+    - UrlDefault: http://127.10.10.10:5010/campus/get/cantidadCitas
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite contar el número de citas que un médico tiene en un día específico.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/cantidadCitas?fecha=2023-08-25&idMedico=2098817568
 
 # Creador:
 
