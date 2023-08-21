@@ -167,6 +167,31 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
     - Descripcion: Endpoint que permite obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue realizada.
     - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorGenero?genero=4
 
+12. Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
+
+    - UrlDefault: http://127.10.10.10:5010/campus/post/usuario
+    - Metodo: post
+    - Tipo token esperado: Usuarios
+    - Data: query
+    - Descripcion: Endpoint que permite insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
+    - Ejemplo:
+    ```json
+    {
+      "id": "2222222222",
+      "primerNombre": "Paco",
+      "primerApellido": "Pruebas",
+      "segundoNombre": "dasda" (Este Dato no es obligatorio),
+      "segundoApellido": "Pruebotas",
+      "telefono": "3156988456",
+      "direccion": "Calle Prueba",
+      "email": "prueba@gmail.com" (Este Dato no es obligatorio),
+      "tipoDocumento": 1,
+      "genero": 1,
+      "fechaNacimiento": "1999-03-21",
+      "acudienteId": 1 (Este Dato no es obligatorio)
+    }
+    ```
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
