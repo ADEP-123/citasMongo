@@ -278,6 +278,10 @@ db.estado_cita.insertMany([
     {
         _id: siguienteId("estado_cita"),
         estcita_nombre: "PERDIDA"
+    },
+    {
+        _id: siguienteId("estado_cita"),
+        estcita_nombre: "REALIZADA"
     }
 ])
 
@@ -586,5 +590,61 @@ db.cita.insertMany([
         cit_estadoCita: 3,
         cit_medico: "3098817569",
         cit_datosUsuario: "5076543298"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-24T09:45:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "1098817776",
+        cit_datosUsuario: "3076543210"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-25T13:30:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "4087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-26T15:15:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "3098817569",
+        cit_datosUsuario: "5076543298"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-27T10:00:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "4098817570",
+        cit_datosUsuario: "6098765432"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-28T12:30:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "2087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-29T14:45:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "3098817569",
+        cit_datosUsuario: "1098817567"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-30T09:15:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "4098817570",
+        cit_datosUsuario: "2087654321"
+    },
+    {
+        _id: siguienteId("cita"),
+        cit_fecha: new Date("2023-08-31T11:45:00Z"),
+        cit_estadoCita: 5,
+        cit_medico: "2098817568",
+        cit_datosUsuario: "3076543210"
     }
 ]);
