@@ -158,6 +158,15 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
     - Descripcion: Endpoint que permite obtener los consultorio donde se aplicó las citas de un paciente.
     - Ejemplo: http://127.10.10.10:5010/campus/get/consultoriosUsuario?idUsuario=2087654321
 
+11. Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue realizada
+
+    - UrlDefault: http://127.10.10.10:5010/campus/get/citasPorGenero
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue realizada.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/citasPorGenero?genero=4
+
 # Creador:
 
 ## Andrès David ELizalde Peralta
