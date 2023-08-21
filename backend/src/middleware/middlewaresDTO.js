@@ -6,6 +6,7 @@ import { pacientesMedicoDTO } from '../routes/dto/js/pacientesMedico.js';
 import { citaPacienteDTO } from '../routes/dto/js/citaPaciente.js';
 import { citaFechaDTO } from '../routes/dto/js/citaFecha.js';
 import { cantidadCitasDTO } from '../routes/dto/js/cantidadCitas.js';
+import { consultorioPacienteDTO } from '../routes/dto/js/consultorioPaciente.js';
 
 
 const middlewareMedicoSepecialidadDTO = ((req, res, next) => {
@@ -68,6 +69,16 @@ const middlewareCantidadCitasDTO = ((req, res, next) => {
     }
 });
 
+const middlewareConsultorioPacienteDTO = ((req, res, next) => {
+    try {
+        let data = plainToClass(consultorioPacienteDTO, req.query, { excludeExtraneousValues: true });
+        req.query = JSON.parse(JSON.stringify(data));
+        next()
+    } catch (err) {
+        res.status(err.status).send(err)
+    }
+});
+
 
 
 export {
@@ -76,5 +87,6 @@ export {
     middlewarePacientesMedicoDTO,
     middlewareCitaPacienteDTO,
     middlewareCitasFechaDTO,
-    middlewareCantidadCitasDTO
+    middlewareCantidadCitasDTO,
+    middlewareConsultorioPacienteDTO
 }
