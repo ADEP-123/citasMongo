@@ -26,16 +26,23 @@ const getNextDateService = async (idUsuario) => {
     return result;
 };
 
-const getPatientsdateByMedicService = async (idUsuario) => {
+const getPatientsdateByMedicService = async (idMedico) => {
     const cita = new Citas()
-    const result = await cita.getPatientsdateByMedic(idUsuario);
+    const result = await cita.getPatientsdateByMedic(idMedico);
     return result;
 };
+
+const getPatientsdateByPatientService = async (idUsuario) => {
+    const cita = new Citas();
+    const result = await cita.getPatientsdateByPatient(idUsuario);
+    return result
+}
 
 export {
     getAllUsersService,
     getAllDatesService,
     getAllSpecialistService,
     getNextDateService,
-    getPatientsdateByMedicService
+    getPatientsdateByMedicService,
+    getPatientsdateByPatientService
 }
