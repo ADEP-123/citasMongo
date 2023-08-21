@@ -98,11 +98,11 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
 4. Encontrar la próxima cita para un paciente específico (por ejemplo, el paciente con **usu_id 1**):
 
 - UrlDefault: http://127.10.10.10:5010/campus/get/citaSiguente
-  - Metodo: get
-  - Tipo token esperado: Cita
-  - Data: query
-  - Descripcion: Endpoint que permite encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
-  - Ejemplo: http://127.10.10.10:5010/campus/get/citaSiguente?idUsuario=2087654321
+- Metodo: get
+- Tipo token esperado: Cita
+- Data: query
+- Descripcion: Endpoint que permite encontrar la próxima cita para un paciente específico, Tenga en cuenta que la api calcula las citas superiores a la fecha actual por lo cual si la prueba debe corroborar que en el query las fechas de las citas default en la base de datos sea superior a la actual para encotrar algun resultado.
+- Ejemplo: http://127.10.10.10:5010/campus/get/citaSiguente?idUsuario=2087654321
 
 5.  Encontrar todos los pacientes que tienen citas con un médico específico (por ejemplo, el médico con **\_id 1098817776**)
 
@@ -148,6 +148,15 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
     - Data: query
     - Descripcion: Endpoint que permite contar el número de citas que un médico tiene en un día específico.
     - Ejemplo: http://127.10.10.10:5010/campus/get/cantidadCitas?fecha=2023-08-25&idMedico=2098817568
+
+10. Obtener los consultorio donde se aplicó las citas de un paciente
+
+    - UrlDefault: http://127.10.10.10:5010/campus/get/consultoriosUsuario
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite obtener los consultorio donde se aplicó las citas de un paciente.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/consultoriosUsuario?idUsuario=2087654321
 
 # Creador:
 
