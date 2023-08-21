@@ -374,6 +374,69 @@ class Citas {
         }
     };
 
+    async getSupendedDatesByMonth(mes) {
+        let session;
+        try {
+            session = await startTransaction();
+            const citaCollection = await collectionGen("cita");
+            const result = citaCollection.aggregate([
+                {
+                    $lookup: {
+                        from: "usuario",
+                        localField: "cit_datosUsuario",
+                        foreignField: "_id",
+                        as: "usuarioInfo"
+                    }
+                },
+                {
+                    $unwind: "$usuarioInfo"
+                },
+                {
+                    $lookup: {
+                        from: "medico",
+                        localField: "cit_medico",
+                        foreignField: "_id",
+                        as: "medicoinfo"
+                    }
+                },
+                {
+                    $unwind: "$medicoinfo"
+                },
+                {
+                    $project: {
+                        id: "$_id",
+                        mes: { $month: "$cit_fecha" },
+                        fecha: "$cit_fecha",
+                        medico: "$medicoinfo.med_nombreCompleto",
+                        usuario: {
+                            $concat: ["$usuarioInfo.usu_nombre", " ", "$usuarioInfo.usu_primer_apellido_usuar", " ", "$usuarioInfo.usu_segdo_apellido_usuar"]
+                        },
+                        generoid: "$usuarioInfo.usu_genero",
+                        estado: "$cit_estadoCita",
+                        _id: 0
+                    }
+                },
+                {
+                    $match: {
+                        mes: mes,
+                        estado: 2
+                    }
+                }
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    };
+
 
 }
 export default Citas;

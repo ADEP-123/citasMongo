@@ -75,6 +75,12 @@ const getAcudienteByIdService = async (id) => {
     return result;
 };
 
+const getSupendedDatesByMonthService = async (mes) => {
+    const cita = new Citas()
+    const result = await cita.getSupendedDatesByMonth(mes);
+    return result;
+};
+
 export {
     getAllUsersService,
     getAllDatesService,
@@ -87,5 +93,6 @@ export {
     getAmountDatesbyDateAndMedicService,
     getDateConsultoryService,
     getDatesByGenderService,
-    getAcudienteByIdService
+    getAcudienteByIdService,
+    getSupendedDatesByMonthService
 }

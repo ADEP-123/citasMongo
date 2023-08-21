@@ -1,4 +1,4 @@
-import { getAllDatesService, getAllMedicsAndConsultoriesService, getAllSpecialistService, getAllUsersService, getAmountDatesbyDateAndMedicService, getDateConsultoryService, getDatesByDateService, getDatesByGenderService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService } from "../services/getServices.js";
+import { getAllDatesService, getAllMedicsAndConsultoriesService, getAllSpecialistService, getAllUsersService, getAmountDatesbyDateAndMedicService, getDateConsultoryService, getDatesByDateService, getDatesByGenderService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService, getSupendedDatesByMonthService } from "../services/getServices.js";
 
 
 const getUsersController = async (req, res, next) => {
@@ -108,6 +108,16 @@ const getDatesByGenderController = async (req, res, next) => {
     }
 };
 
+const getSuspendedDatesByMonthController = async (req, res, next) => {
+    try {
+        const { mes } = req.query;
+        const result = await getSupendedDatesByMonthService(Number(mes));
+        res.status(200).json({ message: `se han encontrado ${result.length} resultados`, result })
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 
 
@@ -122,5 +132,6 @@ export {
     getAllMedicsAndConsultoriesController,
     getAmountDatesbyDateAndMedicController,
     getDateConsultoryController,
-    getDatesByGenderController
+    getDatesByGenderController,
+    getSuspendedDatesByMonthController
 }

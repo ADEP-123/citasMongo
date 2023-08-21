@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllMedicsAndConsultoriesController, getAmountDatesbyDateAndMedicController, getDateConsultoryController, getDatesByDateController, getDatesByGenderController, getDatesController, getMedicsController, getNextDateController, getPatientsdateByMedicController, getPatientsdateByPatientController, getUsersController } from '../controllers/getDataControllers.js';
+import { getAllMedicsAndConsultoriesController, getAmountDatesbyDateAndMedicController, getDateConsultoryController, getDatesByDateController, getDatesByGenderController, getDatesController, getMedicsController, getNextDateController, getPatientsdateByMedicController, getPatientsdateByPatientController, getSuspendedDatesByMonthController, getUsersController } from '../controllers/getDataControllers.js';
 import { contentMiddlewareCitas, contentMiddlewareMedicos, contentMiddlewareUsuarios } from '../middleware/contentVerifyMiddleware.js';
 import { middlewareCantidadCitasDTO, middlewareCitaPacienteDTO, middlewareCitasAtendidasGeneroDTO, middlewareCitasFechaDTO, middlewareConsultorioPacienteDTO, middlewareMedicoSepecialidadDTO, middlewarePacientesMedicoDTO, middlewareProximaCitaDTO } from '../middleware/middlewaresDTO.js';
 
@@ -17,6 +17,7 @@ const getInitRoute = () => {
     router.get("/cantidadCitas", contentMiddlewareCitas, middlewareCantidadCitasDTO, getAmountDatesbyDateAndMedicController);
     router.get("/consultoriosUsuario", contentMiddlewareCitas, middlewareConsultorioPacienteDTO, getDateConsultoryController);
     router.get("/citasPorGenero", contentMiddlewareCitas, middlewareCitasAtendidasGeneroDTO, getDatesByGenderController);
+    router.get("/citasSuspendidas",contentMiddlewareCitas, getSuspendedDatesByMonthController);
 
     return router;
 }
