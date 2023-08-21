@@ -191,7 +191,23 @@ Ahora si podra interactuar con las consultas de la siguiente manera:
       "acudienteId": 1 (Este Dato no es obligatorio)
     }
     ```
+13. Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar la fecha de la cita, el nombre del usuario y el médico.
 
+    - UrlDefault: http://127.10.10.10:5010/campus/get/citasSuspendidas
+    - Metodo: get
+    - Tipo token esperado: Cita
+    - Data: query
+    - Descripcion: Endpoint que permite mostrar todas las citas que fueron rechazadas y en un mes específico.
+    - Ejemplo: http://127.10.10.10:5010/campus/get/citasSuspendidas?mes=8
+
+---
+## Notas:
+--- 
+1. Creacion de fecha de nacimiento para usuario: Se creo un campo llamado usu_fechNac de tipo Date para poder calcular la edad del usuario
+2. Cambio a datetime de cita_fecha: se cambio el tipo de dato de cita_fecha a DateTime ya que es logico que las citas tengan la hora en la que estas se llevaran a cabo.
+3. Se considero que el acudiente puede ser nulo para aquellos mayores de edad
+
+---
 # Creador:
 
 ## Andrès David ELizalde Peralta
