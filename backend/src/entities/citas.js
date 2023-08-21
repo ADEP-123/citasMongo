@@ -167,5 +167,47 @@ class Citas {
         }
     };
 
+    async getDatesbyDate(fecha) {
+        let session;
+        const fechaFormateada = new Date(fecha)
+        const diaSiguiente = new Date(fechaFormateada)
+        diaSiguiente.setDate(diaSiguiente.getDate() + 1)
+        try {
+            session = await startTransaction();
+            const productosCollection = await collectionGen("cita");
+            const result = productosCollection.aggregate([
+                {
+                    $project: {
+                        id: "$_id",
+                        fecha: "$cit_fecha",
+                        idEstadoCita: "$cit_estadoCita",
+                        idMedico: "$cit_medico",
+                        idUsuario: "$cit_datosUsuario",
+                        _id: 0
+                    }
+                },
+                {
+                    $match: {
+                        fecha: {
+                            $gte: fechaFormateada,
+                            $lte: diaSiguiente
+                        }
+                    }
+                }
+            ]).toArray();
+            await session.commitTransaction();
+            return result;
+        } catch (error) {
+            if (session) {
+                await session.abortTransaction();
+            }
+            throw error;
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    };
+
 }
 export default Citas;

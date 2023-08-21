@@ -1,4 +1,4 @@
-import { getAllDatesService, getAllSpecialistService, getAllUsersService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService } from "../services/getServices.js";
+import { getAllDatesService, getAllSpecialistService, getAllUsersService, getDatesByDateService, getNextDateService, getPatientsdateByMedicService, getPatientsdateByPatientService } from "../services/getServices.js";
 
 
 const getUsersController = async (req, res, next) => {
@@ -59,6 +59,16 @@ const getPatientsdateByPatientController = async (req, res, next) => {
     }
 }
 
+const getDatesByDateController = async (req, res, next) => {
+    try {
+        const { cit_fecha } = req.query;
+        const result = await getDatesByDateService(cit_fecha);
+        res.status(200).json({ message: `se han encontrado ${result.length} resultados`, result })
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 
 
 
@@ -68,5 +78,6 @@ export {
     getMedicsController,
     getPatientsdateByMedicController,
     getNextDateController,
-    getPatientsdateByPatientController
+    getPatientsdateByPatientController,
+    getDatesByDateController
 }

@@ -17,7 +17,7 @@ __decorate([
     Expose({ name: "fecha" }),
     Transform(({ value, key }) => {
         if (value) {
-            if (/^\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1]) (20|21|22|23|[01]\d|\d):[0-5]\d:[0-5]\d$/.test(value)) {
+            if (/^\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])$/.test(value)) {
                 return value;
             }
             else {
