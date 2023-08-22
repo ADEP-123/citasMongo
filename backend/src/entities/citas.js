@@ -60,6 +60,14 @@ class Citas {
                         idUsuario: { $eq: idUsuario },
                         fecha: { $gte: new Date() }
                     }
+                },
+                {
+                    $sort: {
+                        fecha: 1
+                    }
+                },
+                {
+                    $limit: 1
                 }
             ]).toArray();
             await session.commitTransaction();
